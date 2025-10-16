@@ -1,59 +1,135 @@
-# MongoDB Fundamentals - Week 1
+PLP Bookstore MongoDB Queries Project
 
-## Setup Instructions
+This repository contains the necessary scripts and queries to set up a plp_bookstore database, populate it with book data, and execute various MongoDB operations, ranging from basic CRUD to advanced aggregation and performance indexing.
 
-Before you begin this assignment, please make sure you have the following installed:
+Prerequisites
 
-1. **MongoDB Community Edition** - [Installation Guide](https://www.mongodb.com/docs/manual/administration/install-community/)
-2. **MongoDB Shell (mongosh)** - This is included with MongoDB Community Edition
-3. **Node.js** - [Download here](https://nodejs.org/)
+To run these scripts, you must have:
 
-### Node.js Package Setup
+MongoDB Server: Installed locally or connected via a MongoDB Atlas cluster.
 
-Once you have Node.js installed, run the following commands in your assignment directory:
+mongosh: The MongoDB Shell, installed and configured to connect to your MongoDB server.
 
-```bash
-# Initialize a package.json file
-npm init -y
+The insert_books.js file (not provided here, but required to populate the data).
 
-# Install the MongoDB Node.js driver
-npm install mongodb
-```
+Setup Instructions
 
-## Assignment Overview
+1. Database and Collection Creation
 
-This week focuses on MongoDB fundamentals including:
-- Creating and connecting to MongoDB databases
-- CRUD operations (Create, Read, Update, Delete)
-- MongoDB queries and filters
-- Aggregation pipelines
-- Indexing for performance
+The first line in both script files (insert_books.js and queries.js) is use plp_bookstore;. This command handles the database creation automatically if it doesn't already exist. The books collection is created when the first document is inserted.
 
-## Submission
+2. Running the Scripts
 
-Complete all the exercises in this assignment and push your code to GitHub using the provided GitHub Classroom link.
+All scripts are designed to be run directly using the mongosh utility.
 
-## Getting Started
+Step 1: Insert Data
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Install MongoDB locally or set up a MongoDB Atlas account
-4. Run the provided `insert_books.js` script to populate your database
-5. Complete the tasks in the assignment document
+You must run the insertion script first to populate the books collection with data.
 
-## Files Included
+# Assuming you have an insert_books.js file with the 10 book documents
+mongosh < insert_books.js
 
-- `Week1-Assignment.md`: Detailed assignment instructions
-- `insert_books.js`: Script to populate your MongoDB database with sample book data
 
-## Requirements
+Step 2: Run Queries
 
-- Node.js (v18 or higher)
-- MongoDB (local installation or Atlas account)
-- MongoDB Shell (mongosh) or MongoDB Compass
+Execute the queries in the queries.js file to perform the CRUD, advanced, and indexing tasks.
 
-## Resources
+mongosh < queries.js
 
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [MongoDB University](https://university.mongodb.com/)
-- [MongoDB Node.js Driver](https://mongodb.github.io/node-mongodb-native/) 
+
+Query Breakdown (from queries.js)
+
+The queries.js file contains queries categorized by task.
+
+T3. Advanced Queries
+
+ID
+
+Description
+
+Concepts Demonstrated
+
+A1
+
+Find books in stock AND published after 2010.
+
+Compound Query, $gt operator.
+
+A2
+
+Return only title, author, and price.
+
+Projection ({field: 1}), Hiding _id.
+
+A3
+
+Display books sorted by price (Asc/Desc).
+
+.sort() method (1 for Asc, -1 for Desc).
+
+A4
+
+Implement 5-book pagination.
+
+.limit() and .skip() methods.
+
+T4. Aggregation Pipelines
+
+ID
+
+Description
+
+Pipeline Stages
+
+T4.1
+
+Calculate the average price of books per genre.
+
+$group with $avg.
+
+T4.2
+
+Find the single author with the most books.
+
+Chaining $group, $sort, and $limit.
+
+T4.3
+
+Group and count books by their publication decade.
+
+$project (for calculated fields), $group, and $sort.
+
+T5. Indexing and Performance
+
+This section manages and demonstrates index creation.
+
+ID
+
+Description
+
+Index Type
+
+T5.1
+
+Creates a single index on the title field.
+
+Single-Field Index
+
+T5.2
+
+Creates a combined index on author and published_year.
+
+Compound Index
+
+T5.4
+
+Uses db.books.find().explain("executionStats") to verify that MongoDB is using the created indexes (IXSCAN).
+
+Performance Testing
+
+Cleanup
+
+To remove the database and all its contents when finished:
+
+use plp_bookstore;
+db.dropDatabase();
